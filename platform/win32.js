@@ -13,7 +13,7 @@ class SayPlatformWin32 extends SayPlatformBase {
 
   buildSpeakCommand ({ text, voice, speed }) {
     let args = []
-    let pipedData = ''
+    let pipedData = text
     let options = {}
 
     let psCommand = `Add-Type -AssemblyName System.speech;$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;`
@@ -29,7 +29,8 @@ class SayPlatformWin32 extends SayPlatformBase {
 
     psCommand += `$speak.Speak([Console]::In.ReadToEnd())`
 
-    pipedData += text
+    // fix: 中文GBK编码问题
+    // pipedData += text
     args.push(psCommand)
     options.shell = true
 
